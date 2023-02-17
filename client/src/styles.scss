@@ -1,0 +1,72 @@
+.App {  
+  text-align: center;
+}
+
+body {
+  font-family: "Gotham",sans-serif;
+}
+
+#root {
+  background: #ffffff;
+  min-height: 100vh;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-self: stretch; flex: 1 1 auto;
+  position: relative;
+}
+
+a {
+  color: inherit !important; 
+  text-decoration: none !important;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0 !important;
+}
+
+.text-underline-hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+.text-underline-hover:hover {
+  text-decoration: underline;
+  color: inherit;
+}
+
+.outline-hover {
+  border: 1px solid transparent !important;
+  border-radius: 0.2rem;
+}
+
+.outline-hover:hover {
+  border-color: #fff !important;
+}
+
+.box-hover {
+  background-color: initial;
+}
+
+.box-hover:hover {
+  background-color: #e3e3e3 !important;
+}
+
+.text-direction-upright{
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.max-vh-100 {
+  max-height: 100vh;
+}
+
+.fs-7 {
+  font-size: 12px;
+}

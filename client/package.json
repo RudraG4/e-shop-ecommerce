@@ -1,0 +1,51 @@
+{
+	"name": "e-shop-ecommerce",
+	"version": "1.0.0",
+	"description": "",
+	"keywords": [
+		"e-commerce",
+		"eshop",
+		"react"
+	],
+	"private": true,
+	"main": "src/index.js",
+	"dependencies": {
+		"@fortawesome/fontawesome-svg-core": "6.1.2",
+		"@fortawesome/free-regular-svg-icons": "6.1.2",
+		"@fortawesome/free-solid-svg-icons": "6.1.2",
+		"@fortawesome/react-fontawesome": "0.2.0",
+		"@stripe/react-stripe-js": "1.16.1",
+		"@stripe/stripe-js": "1.46.0",
+		"axios": "1.2.0",
+		"bootstrap": "5.2.1",
+		"csbbust": "1.0.1",
+		"dotenv": "16.0.3",
+		"local-storage": "2.0.0",
+		"react": "18.2.0",
+		"react-bootstrap": "2.5.0",
+		"react-countdown": "2.3.2",
+		"react-data-grid": "7.0.0-beta.20",
+		"react-dom": "18.2.0",
+		"react-icons": "4.7.1",
+		"react-lazy-load-image-component": "1.5.6",
+		"react-paginate": "8.1.4",
+		"react-router-dom": "6.4.1",
+		"react-scripts": "4.0.0",
+		"react-toastify": "8.1.0",
+		"react-transition-group": "4.4.5",
+		"sass": "1.55.0",
+		"styled-components": "5.3.6"
+	},
+	"scripts": {
+		"start": "react-scripts start",
+		"build": "react-scripts build",
+		"test": "react-scripts test --env=jsdom",
+		"eject": "react-scripts eject"
+	},
+	"browserslist": [
+		">0.2%",
+		"not dead",
+		"not ie <= 11",
+		"not op_mini all"
+	]
+}
