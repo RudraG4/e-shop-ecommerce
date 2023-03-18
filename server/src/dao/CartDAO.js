@@ -44,19 +44,19 @@ const injectClient = async (client) => {
 const _getCart = async (filter = {}) => {
   const cart = {
     user: filter.userId,
-    _id: filter.cartId,
+    sessionid: filter.sessionid,
     totalProducts: 0,
     products: [],
     subTotal: 0,
   };
-  if (!filter.userId && !filter.cartId) {
+  if (!filter.userId && !filter.sessionid) {
     return cart;
   }
   const match = {};
   if (filter.userId) {
     match["user"] = new ObjectId(filter.userId);
   } else {
-    match["_id"] = new ObjectId(filter.cartId);
+    match["sessionid"] = filter.sessionid;
   }
 
   const carts = await Cart.aggregate([
@@ -121,15 +121,15 @@ const _getCart = async (filter = {}) => {
   return carts.length ? carts[0] : cart;
 };
 
-const addCartItem = async (userId, cartId, product) => {
-  if (!userId && !cartId) {
+const addCartItem = async (userId, sessionid, product) => {
+  if (!userId && !sessionid) {
     return null;
   }
   const filter = { status: "active" };
   if (userId) {
     filter["user"] = new ObjectId(userId);
   } else {
-    filter["_id"] = new ObjectId(cartId);
+    filter["sessionid"] = sessionid;
   }
 
   return await Cart.updateOne(
@@ -150,8 +150,8 @@ const addCartItem = async (userId, cartId, product) => {
   );
 };
 
-const updateCartItem = async (userId, cartId, product) => {
-  if (!userId && !cartId) {
+const updateCartItem = async (userId, sessionid, product) => {
+  if (!userId && !sessionid) {
     return null;
   }
   const filter = {
@@ -161,7 +161,7 @@ const updateCartItem = async (userId, cartId, product) => {
   if (userId) {
     filter["user"] = new ObjectId(userId);
   } else {
-    filter["_id"] = new ObjectId(cartId);
+    filter["sessionid"] = sessionid;
   }
 
   return await Cart.updateOne(filter, {
@@ -186,15 +186,15 @@ const getCart = async (filter) => {
   return cart;
 };
 
-const getCartCount = async (userId, cartId) => {
-  if (!userId && !cartId) {
+const getCartCount = async (userId, sessionid) => {
+  if (!userId && !sessionid) {
     return 0;
   }
   const match = {};
   if (userId) {
     match["user"] = new ObjectId(userId);
   } else {
-    match["_id"] = new ObjectId(cartId);
+    match["sessionid"] = sessionid;
   }
 
   const cart = await Cart.find(match, { $project: { totalProducts: 1 } });
@@ -203,8 +203,8 @@ const getCartCount = async (userId, cartId) => {
 
 /** Quantity: +1 to add, -1 to remove */
 const addToCart = async (cartItem) => {
-  const { _id: productId, quantity, userId, cartId, currency } = cartItem;
-  if ((!userId && !cartId) || !productId || !quantity) {
+  const { _id: productId, quantity, userId, sessionid, currency } = cartItem;
+  if ((!userId && !sessionid) || !productId || !quantity) {
     return { error: "Mandatory parameters missing" };
   }
 
@@ -212,7 +212,7 @@ const addToCart = async (cartItem) => {
   if (product) {
     const { title, price, stock } = product;
     const priceForQty = price.amount * quantity;
-    const cart = await _getCart({ userId, cartId });
+    const cart = await _getCart({ userId, sessionid });
     const itemExist =
       cart?.products?.findIndex((item) => {
         return item._id.toString() === productId;
@@ -221,15 +221,15 @@ const addToCart = async (cartItem) => {
     if (stock >= quantity) {
       const item = { productId, quantity, title, priceForQty };
       if (!itemExist) {
-        await addCartItem(userId, cartId, item);
+        await addCartItem(userId, sessionid, item);
         // const stockResp = await ProductDAO.addStock(productId, -1 * quantity);
       } else {
-        await updateCartItem(userId, cartId, item);
+        await updateCartItem(userId, sessionid, item);
         // const stockResp = await ProductDAO.addStock(productId, -1 * quantity);
       }
       return {
         success: true,
-        cart: await getCart({ userId, cartId, currency }),
+        cart: await getCart({ userId, sessionid, currency }),
       };
     }
     return { error: "No sufficient stock available" };
@@ -238,18 +238,18 @@ const addToCart = async (cartItem) => {
 };
 
 const removeFromCart = async (cartItem) => {
-  const { productId, userId, cartId, currency } = cartItem;
-  if ((!userId && !cartId) || !productId) {
+  const { productId, userId, sessionid, currency } = cartItem;
+  if ((!userId && !sessionid) || !productId) {
     return { error: "Mandatory parameters missing" };
   }
   const filter = { status: "active" };
   if (userId) {
     filter["user"] = new ObjectId(userId);
   } else {
-    filter["_id"] = new ObjectId(cartId);
+    filter["sessionid"] = sessionid;
   }
 
-  const cart = await _getCart({ userId, cartId });
+  const cart = await _getCart({ userId, sessionid });
   const index = cart?.products?.findIndex((item) => {
     return item._id.toString() === productId;
   });
@@ -264,21 +264,24 @@ const removeFromCart = async (cartItem) => {
       $currentDate: { lastModified: true },
     });
     // const stockResp = await ProductDAO.addStock(productId, quantity);
-    return { success: true, cart: await getCart({ userId, cartId, currency }) };
+    return {
+      success: true,
+      cart: await getCart({ userId, sessionid, currency }),
+    };
   }
   return { error: "Item not exist in the cart" };
 };
 
 const clearCart = async (cartItem) => {
-  const { userId, cartId, currency } = cartItem;
-  if (!userId && !cartId) {
+  const { userId, sessionid, currency } = cartItem;
+  if (!userId && !sessionid) {
     return { error: "Mandatory parameters missing" };
   }
   const filter = {};
   if (userId) {
     filter["user"] = new ObjectId(userId);
   } else {
-    filter["_id"] = new ObjectId(cartId);
+    filter["sessionid"] = sessionid;
   }
 
   await Cart.updateOne(filter, {
@@ -290,14 +293,17 @@ const clearCart = async (cartItem) => {
       products: [],
     },
   });
-  return { success: true, cart: await getCart({ userId, cartId, currency }) };
+  return {
+    success: true,
+    cart: await getCart({ userId, sessionid, currency }),
+  };
 };
 
-const associateCartToUser = async (userId, cartId) => {
+const associateCartToUser = async (userId, sessionid) => {
   try {
-    if (!userId || !cartId) return { error: "Mandatory parameters missing" };
+    if (!userId || !sessionid) return { error: "Mandatory parameters missing" };
     const userCart = await _getCart({ userId });
-    const tempCart = await _getCart({ cartId });
+    const tempCart = await _getCart({ sessionid });
     if (tempCart) {
       if (userCart) {
         let subTotal = 0;
@@ -355,7 +361,7 @@ const associateCartToUser = async (userId, cartId) => {
         });
       }
       // delete tempcart
-      await Cart.deleteOne({ _id: new ObjectId(cartId) });
+      await Cart.deleteOne({ sessionid });
     }
   } catch (err) {
     console.error(err.message);
@@ -363,7 +369,7 @@ const associateCartToUser = async (userId, cartId) => {
 };
 
 const calculateSummary = async (cart) => {
-  const { userId, cartId, deliveryType, couponCode, currency } = cart;
+  const { userId, sessionid, deliveryType, couponCode, currency } = cart;
   const summary = {
     user: null,
     _id: null,
@@ -383,7 +389,7 @@ const calculateSummary = async (cart) => {
     },
   };
 
-  const _cart = await _getCart({ userId, cartId });
+  const _cart = await _getCart({ userId, sessionid });
   if (_cart) {
     summary["_id"] = _cart["_id"];
     summary["user"] = _cart["user"];

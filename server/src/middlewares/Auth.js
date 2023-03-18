@@ -77,6 +77,7 @@ export const verifyRefresh = async (request, response, next) => {
     return response.status(401).send();
   } catch (error) {
     if (error.message === "Invalid Token") {
+      request.session.destroy();
       return response.status(401).send();
     }
     return response.status(500).json({ error: error.message });
