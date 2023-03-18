@@ -126,6 +126,7 @@ export default class Api {
 
 export const api = new Api({
 	client: axios.create({
+		withCredentials: true,
 		baseURL: process.env.REACT_APP_API_ORIGIN,
 		headers: { 'Content-Type': 'application/json' },
 		responseType: 'json'

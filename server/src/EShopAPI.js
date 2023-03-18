@@ -8,6 +8,7 @@ import { fileURLToPath } from "url";
 import path from "path";
 import { readdir } from "node:fs/promises";
 import { config } from "dotenv";
+import expressSession from "express-session";
 
 config();
 const __filename = fileURLToPath(import.meta.url);
@@ -34,6 +35,19 @@ export default class EShopAPI {
     this.app.use(helmet());
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: false }));
+    this.app.use(
+      expressSession({
+        secret: "keyboard cat",
+        name: "session",
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+          maxAge: 86400,
+          sameSite: "strict",
+          // domain: "csb.app",
+        },
+      })
+    );
     this.app.use((req, res, next) => {
       const genUniqueId = () => {
         return Buffer.from(new ObjectId().toString()).toString("base64");
@@ -46,10 +60,12 @@ export default class EShopAPI {
         const currency = req.headers["currency"] || "USD";
         req.session = req.session || {};
         req.session.sessionid = decodeUniqueId(sessionid);
-        req.header("currency", currency);
         res.header("session-id", sessionid);
         res.header("currency", currency);
       }
+      console.log(req.session);
+      req.session.currency = req.session.currency || "USD";
+
       next();
     });
     await this.loadRoutes();

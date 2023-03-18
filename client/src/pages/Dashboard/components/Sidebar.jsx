@@ -1,19 +1,10 @@
-import {
-	IoHome,
-	IoAnalyticsSharp,
-	IoTrendingUpSharp,
-	IoPeopleSharp,
-	IoStorefrontSharp,
-	IoBarChartSharp,
-	IoSettingsSharp,
-	IoNotificationsSharp,
-	IoLogOutSharp,
-	IoInformationCircleSharp
-} from 'react-icons/io5';
+import { IoHome, IoAnalyticsSharp, IoPeopleSharp, IoStorefrontSharp } from 'react-icons/io5';
+import { IoBarChartSharp, IoSettingsSharp } from 'react-icons/io5';
+import { IoNotificationsSharp, IoLogOutSharp, IoInformationCircleSharp } from 'react-icons/io5';
 import { FaRupeeSign } from 'react-icons/fa';
 import { BiCategory } from 'react-icons/bi';
 import { RxDoubleArrowRight, RxDoubleArrowLeft } from 'react-icons/rx';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { useState } from 'react';
 

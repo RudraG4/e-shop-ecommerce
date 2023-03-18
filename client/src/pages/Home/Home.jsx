@@ -40,7 +40,6 @@ export default function Home() {
 
 	return (
 		<Container fluid className="p-0">
-			{/* <Banner> */}
 			<Banner
 				url="/categories"
 				serviceParams={{ skip: 0, limit: 5 }}
@@ -52,7 +51,6 @@ export default function Home() {
 				LoadingComponent={<BannerCardSkeleton />}
 				className="p-0"
 			/>
-			{/* </Banner> */}
 
 			<HomeContainer className="p-3 bg-white">
 				<Wrapper>

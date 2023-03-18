@@ -1,6 +1,19 @@
 import nodemailer from "nodemailer";
 import templates from "./templates.js";
 
+const transportOption = {
+  pool: true,
+  host: process.env.MAILER_SMTP_HOST,
+  port: process.env.MAILER_SMTP_PORT,
+  secure: false,
+  auth: {
+    user: process.env.MAILER_ACC_UNAME,
+    pass: process.env.MAILER_ACC_PWD,
+  },
+};
+
+const From = `${process.env.MAILER_FNAME} <${process.env.MAILER_EMAIL}>`;
+
 class Mailer {
   static transporter;
   static account;
@@ -8,16 +21,7 @@ class Mailer {
   static async init() {
     try {
       if (!Mailer.transporter) {
-        Mailer.transporter = nodemailer.createTransport({
-          pool: true,
-          host: process.env.MAILER_SMTP_HOST,
-          port: process.env.MAILER_SMTP_PORT,
-          secure: false,
-          auth: {
-            user: process.env.MAILER_ACC_UNAME,
-            pass: process.env.MAILER_ACC_PWD,
-          },
-        });
+        Mailer.transporter = nodemailer.createTransport(transportOption);
       }
     } catch (err) {
       console.error("Failed to create a testing account. " + err.message);
@@ -29,13 +33,14 @@ class Mailer {
       if (!to || !subject || !body) {
         return null;
       }
-      let info = await Mailer.transporter.sendMail({
-        from: `${process.env.MAILER_FNAME} <${process.env.MAILER_EMAIL}>`,
+      const mailOptions = {
+        from: From,
         to,
         subject,
         text: body,
         html: `<p>${body}</p>`,
-      });
+      };
+      let info = await Mailer.transporter.sendMail(mailOptions);
       return info;
     } catch (err) {
       console.error("Error occurred. " + err.message);
