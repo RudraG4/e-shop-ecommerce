@@ -164,7 +164,6 @@ export default function Register() {
 						<Form.Control
 							type="text"
 							name="name"
-							placeholder="First and last name"
 							isInvalid={errorMessage.name ? true : false}
 							onChange={onValueChange}
 							value={formData.name}
@@ -181,7 +180,6 @@ export default function Register() {
 						<Form.Control
 							type="email"
 							name="email"
-							placeholder="johndoe@gmail.com"
 							isInvalid={errorMessage.email ? true : false}
 							onChange={onValueChange}
 							value={formData.email}
@@ -197,7 +195,6 @@ export default function Register() {
 						<Form.Control
 							type="password"
 							name="password"
-							placeholder="At least 6 characters"
 							isInvalid={errorMessage.password ? true : false}
 							onChange={onValueChange}
 							value={formData.password}
@@ -213,7 +210,6 @@ export default function Register() {
 						<Form.Control
 							type="password"
 							name="cpassword"
-							placeholder="At least 6 characters"
 							isInvalid={errorMessage.cpassword ? true : false}
 							onChange={onValueChange}
 							value={formData.cpassword}

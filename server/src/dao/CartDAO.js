@@ -390,7 +390,7 @@ const calculateSummary = async (cart) => {
   };
 
   const _cart = await _getCart({ userId, sessionid });
-  if (_cart) {
+  if (_cart?.products?.length) {
     summary["_id"] = _cart["_id"];
     summary["user"] = _cart["user"];
     summary["products"] = _cart["products"].map((product) => {
