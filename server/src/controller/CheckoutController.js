@@ -11,22 +11,18 @@ const eventEmitter = new EventEmitter({ captureRejections: true });
 config();
 const stripe = stripePk(process.env.STRIPE_KEY);
 
-const getSummary = async (cartId, deliveryType, currency) => {
-  return await CartDAO.calculateSummary({
-    cartId,
-    deliveryType,
-    currency,
-  });
+const getSummary = async (userId, deliveryType, currency) => {
+  return await CartDAO.calculateSummary({ userId, deliveryType, currency });
 };
 
 const createPaymentIntent = async (req, res) => {
   try {
-    const { cartId, deliveryType } = req.body;
+    const { deliveryType } = req.body;
     const user = req.user;
     const currency = req.headers.currency || "usd";
     if (!user || !user.userId) return res.status(401).send();
 
-    const summary = await getSummary(cartId, deliveryType, "USD");
+    const summary = await getSummary(user.userId, deliveryType, "USD");
     // Create a PaymentIntent with the order amount and currency
     const now = new Date();
     const orderId = ["ORDER", now.getFullYear(), now.getTime()].join("-");

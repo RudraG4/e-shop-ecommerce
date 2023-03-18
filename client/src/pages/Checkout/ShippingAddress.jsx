@@ -17,12 +17,12 @@ export default function ShippingAddress(props) {
 		defaultValues: {
 			name: auth.currentUser.name,
 			address: {
-				line1: 'Bengaluru',
+				line1: '',
 				line2: '',
-				city: 'Bengaluru',
-				country: 'IN',
-				state: 'Karnataka',
-				postal_code: '560088'
+				city: '',
+				country: '',
+				state: '',
+				postal_code: ''
 			}
 		}
 	};

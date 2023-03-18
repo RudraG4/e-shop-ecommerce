@@ -238,8 +238,8 @@ const resetpassword = async (req, res) => {
     if (!storedVerifyToken || storedVerifyToken !== verify_token) {
       return res.status(400).json({ error: "Invalid verification token" });
     }
-
-    await UserDAO.updateUserByEmail(email, { password });
+    const newPassword = await Auth.hashPassword(password);
+    await UserDAO.updateUserByEmail(email, { password: newPassword });
     eventemitter.emit("pwd-reset-done", { email, name: userInfo.name });
     return res.status(200).json({ success: true });
   } catch (err) {
