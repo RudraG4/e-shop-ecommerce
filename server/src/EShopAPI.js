@@ -9,7 +9,6 @@ import path from "path";
 import { readdir } from "node:fs/promises";
 import { config } from "dotenv";
 import expressSession from "express-session";
-// import cookieSession from "cookie-session";
 
 config();
 const __filename = fileURLToPath(import.meta.url);
@@ -17,7 +16,7 @@ const __dirname = path.dirname(__filename);
 
 const corsOptions = {
   origin: process.env.CORS_ORIGIN,
-  exposedHeaders: "session-id,currency,set-cookie",
+  exposedHeaders: "session-id,currency",
   credentials: true,
   maxAge: 24 * 60 * 60 * 1000,
 };
@@ -36,18 +35,6 @@ export default class EShopAPI {
     this.app.use(helmet());
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: false }));
-    // this.app.use(
-    //   cookieSession({
-    //     keys: ["abc"],
-    //     name: "session",
-    //     // secure: true,
-    //     // sameSite: false,
-    //     // path: "/",
-    //     // domain: ".9ldle3-3000.csb.app",
-    //     httpOnly: false,
-    //     maxAge: 86400,
-    //   })
-    // );
     this.app.use(
       expressSession({
         secret: "keyboard cat",
