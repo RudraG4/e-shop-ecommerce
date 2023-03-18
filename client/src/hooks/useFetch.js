@@ -14,7 +14,11 @@ export default function useFetch(url, config, dependencies = []) {
 		if (url) {
 			try {
 				setFecthedData({ isLoading: true, error: false });
-				const axiosConfig = { ...config, cancelToken: cancelTokenSource.token };
+				const axiosConfig = {
+					...config,
+					cancelToken: cancelTokenSource.token,
+					withCredentials: true
+				};
 				if (!url.startsWith('https://')) {
 					axiosConfig['baseURL'] = process.env.REACT_APP_API_ORIGIN;
 				}

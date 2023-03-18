@@ -322,7 +322,7 @@ export default function Header() {
 						</NavBarNav>
 					</NavRight>
 				</NavBar>
-				<Announcement />
+				{/* <Announcement /> */}
 			</div>
 			{isFocused && (
 				<div

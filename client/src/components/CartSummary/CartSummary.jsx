@@ -1,21 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-import { useCartContext, useCartSummary, usePreferenceContext } from 'hooks';
-import { formatCurrency } from 'utils';
+import { useCartSummary } from 'hooks';
 import { Alert, Divider, PromoChecker, ToggleButtonGroup, Card, Loader } from 'components';
 import { Fragment } from 'react';
 import { Stack, Button } from 'react-bootstrap';
 
 const DeliveryOption = (props) => {
 	const { onChange, type, info, expected, readOnly = false } = props;
-
-	const deliveryInfo =
-		type === 'free'
-			? 'Delivers within 5-7 business days'
-			: type === 'standard'
-			? 'Delivers within 2-3 business days'
-			: type === 'express'
-			? 'Delivers at most 1 business day'
-			: '';
 
 	return (
 		<Stack>
@@ -84,7 +74,7 @@ export default function CartSummary({ readOnly = false, className = '' }) {
 
 					<Divider />
 
-					{!readOnly && !coupon?.code && (
+					{/* {!readOnly && !coupon?.code && (
 						<Stack>
 							<PromoChecker onClick={handlePromoApply} />
 							<Divider />
@@ -100,7 +90,7 @@ export default function CartSummary({ readOnly = false, className = '' }) {
 							</Alert>
 							<Divider />
 						</Stack>
-					)}
+					)} */}
 
 					<Stack>
 						<div className="fw-bold fs-5 mb-2">
@@ -110,7 +100,7 @@ export default function CartSummary({ readOnly = false, className = '' }) {
 							<div className="fs-5">Subtotal</div>
 							<div className="fs-5">{subTotal.displayAmount}</div>
 						</Stack>
-						{coupon?.discount && (
+						{/* {coupon?.discount && (
 							<Stack direction="horizontal" className="justify-content-between mb-2">
 								<div className="fs-6">Coupon Discount</div>
 								<div className="fs-6">
@@ -119,7 +109,7 @@ export default function CartSummary({ readOnly = false, className = '' }) {
 										: ` - ${discount.displayAmount}`}
 								</div>
 							</Stack>
-						)}
+						)} */}
 						<Stack direction="horizontal" className="justify-content-between mb-2">
 							<div className="fs-6">Delivery</div>
 							<div className="fs-6">
