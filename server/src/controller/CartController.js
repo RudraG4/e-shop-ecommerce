@@ -8,7 +8,7 @@ const addToCart = async (req, resp) => {
     const cartItem = {
       ...req.body,
       userId: user?.userId,
-      cartId: sessionid,
+      sessionid: sessionid,
       currency,
     };
     const cartResp = await CartDAO.addToCart(cartItem);
@@ -29,7 +29,7 @@ const removeFromCart = async (req, resp) => {
     const cartItem = {
       productId: req.body._id,
       userId: user?.userId,
-      cartId: sessionid,
+      sessionid,
       currency,
     };
     const cartResp = await CartDAO.removeFromCart(cartItem);
@@ -47,7 +47,7 @@ const clearCart = async (req, resp) => {
     const user = req.user;
     const { sessionid } = req.session;
     const { currency } = req.headers;
-    const cartItem = { userId: user?.userId, cartId: sessionid, currency };
+    const cartItem = { userId: user?.userId, sessionid: sessionid, currency };
     const cartResp = await CartDAO.clearCart(cartItem);
     if (cartResp?.success) {
       return resp.status(200).json(cartResp);
@@ -63,7 +63,7 @@ const getCart = async (req, resp) => {
     const user = req.user;
     const { sessionid } = req.session;
     const { currency } = req.headers;
-    const filter = { userId: user?.userId, cartId: sessionid, currency };
+    const filter = { userId: user?.userId, sessionid: sessionid, currency };
     const cart = await CartDAO.getCart(filter);
     return resp.status(200).json({ cart });
   } catch (err) {
@@ -90,7 +90,7 @@ const calculateSummary = async (req, resp) => {
     const cart = {
       ...req.body,
       userId: user?.userId,
-      cartId: sessionid,
+      sessionid: sessionid,
       currency,
     };
     const summary = await CartDAO.calculateSummary(cart);

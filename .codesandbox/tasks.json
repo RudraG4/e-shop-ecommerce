@@ -6,11 +6,11 @@
   "tasks": {
     "install-server-dependencies": {
       "name": "Install Server Dependencies",
-      "command": "npm install"
+      "command": "cd server && npm install"
     },
     "install-client-dependencies": {
       "name": "Install Client Dependencies",
-      "command": "npm install"
+      "command": "cd client && npm install"
     },
     "Server": {
       "name": "Start Server",

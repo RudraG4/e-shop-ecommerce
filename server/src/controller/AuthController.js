@@ -137,6 +137,7 @@ const signout = async (req, res) => {
     };
     const updateResp = await UserDAO.updateUserByEmail(email, updateInfo);
     if (updateResp?.success) {
+      req.session.destroy();
       return res.status(200).json(updateResp);
     }
     return res
