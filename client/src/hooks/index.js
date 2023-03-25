@@ -9,3 +9,4 @@ export { default as useScrollToTop } from './useScrollToTop';
 export { default as useLocalStorage } from './useLocalStorage';
 export { default as useDebounce } from './useDebounce';
 export { default as useAxios } from './useAxios';
+export { default as useScript } from './useScript';

@@ -1,13 +1,10 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-data-grid/lib/styles.css';
 import './styles.scss';
-import { config } from 'dotenv';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import * as Pages from 'pages';
 import * as Auth from 'pages/Auth';
 import * as Layouts from 'pages/Layouts';
-
-config();
 
 function withProtectedRoute(component) {
 	if (!component) return;

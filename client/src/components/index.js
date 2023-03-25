@@ -2,6 +2,7 @@ export { default as List } from './UI/List';
 export { default as Alert } from './UI/Alert';
 export { default as Avatar } from './UI/Avatar';
 export { default as Accordion } from './UI/Accordion';
+export { default as Analytics } from './Analytics';
 export { default as Badge } from './UI/Badge';
 export { default as Announcement } from './UI/Announcement';
 export { default as Button } from './Buttons/Button';
