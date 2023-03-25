@@ -20,8 +20,7 @@ const corsOptions = {
   credentials: true,
   maxAge: 24 * 60 * 60 * 1000,
 };
-const loggerFormat =
-  "[REQUEST] [:date[iso]] [:method] :url HTTP/:http-version :status :response-time ms";
+const loggerFormat = "[REQUEST] [:date[iso]] [:method] :url HTTP/:http-version :status :response-time ms";
 
 const sessionStore = (db) => {
   const store = MongoStore.create({
@@ -76,9 +75,7 @@ export default class EShopAPI {
         try {
           if (!route.endsWith(".route.js")) continue;
           let routeBase = "/" + route.split(".")[0];
-          const { default: router } = await import(
-            path.join(__dirname, "routes", route)
-          );
+          const { default: router } = await import(`./routes/${route}`);
           if (router) {
             if (routeBase === "/index") {
               routeBase = "/";
@@ -87,9 +84,7 @@ export default class EShopAPI {
             console.log(`[Router] registered route ${routeBase}`);
           }
         } catch (error) {
-          console.log(
-            `[Router] Error registering route ${route} : ${error.message}`
-          );
+          console.log(`[Router] Error registering route ${route} : ${error.message}`);
         }
       }
       this.app.use((req, res) => {
@@ -103,9 +98,7 @@ export default class EShopAPI {
   async launch() {
     try {
       const server = this.app.listen(this.PORT, () => {
-        console.log(
-          "[Server] Successfully started on port " + server.address().port
-        );
+        console.log("[Server] Successfully started on port " + server.address().port);
       });
       return server;
     } catch (err) {
