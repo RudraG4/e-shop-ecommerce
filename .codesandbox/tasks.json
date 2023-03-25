@@ -14,7 +14,7 @@
     },
     "Server": {
       "name": "Start Server",
-      "command": "cd server && npm start",
+      "command": "cd server && npm run dev:start",
       "runAtStart": true
     },
     "Client": {
