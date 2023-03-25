@@ -3,7 +3,6 @@ import cors from "cors";
 import logger from "morgan";
 import helmet from "helmet";
 import bodyParser from "body-parser";
-import { ObjectId } from "mongodb";
 import { fileURLToPath } from "url";
 import path from "path";
 import { readdir } from "node:fs/promises";
@@ -21,7 +20,8 @@ const corsOptions = {
   credentials: true,
   maxAge: 24 * 60 * 60 * 1000,
 };
-const loggerFormat = "[REQUEST] :method :url   :status :response-time ms";
+const loggerFormat =
+  "[REQUEST] [:date[iso]] [:method] :url HTTP/:http-version :status :response-time ms";
 
 const sessionStore = (db) => {
   const store = MongoStore.create({
@@ -60,21 +60,6 @@ export default class EShopAPI {
       })
     );
     this.app.use((req, res, next) => {
-      // const genUniqueId = () => {
-      //   return Buffer.from(new ObjectId().toString()).toString("base64");
-      // };
-      // const decodeUniqueId = (id) => {
-      //   return Buffer.from(id, "base64").toString("ascii");
-      // };
-      // if (req.method !== "OPTIONS") {
-      //   const sessionid = req.headers["session-id"] || genUniqueId();
-      //   const currency = req.headers["currency"] || "USD";
-      //   req.session = req.session || {};
-      //   req.session.sessionid = decodeUniqueId(sessionid);
-      //   res.header("session-id", sessionid);
-      //   res.header("currency", currency);
-      // }
-      console.log(req.session.id);
       req.session.sessionid = req.session.id;
       req.session.currency = req.session.currency || "USD";
 
