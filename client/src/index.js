@@ -3,18 +3,17 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-data-grid/lib/styles.css';
 import 'react-toastify/dist/ReactToastify.css';
 import './styles.scss';
-import { config } from 'dotenv';
 import { BrowserRouter } from 'react-router-dom';
 import { useScrollToTop as ScrollToTop } from 'hooks';
 import { Provider } from 'context/AuthContext';
-import App from './App';
 import { ToastContainer } from 'react-toastify';
-
-config();
+import { Analytics } from "components";
+import App from './App';
 
 function EShop() {
 	return (
 		<BrowserRouter basename="/">
+			{process.env.NODE_ENV === "production" && <Analytics />}
 			<Provider>
 				<ScrollToTop />
 				<ToastContainer />

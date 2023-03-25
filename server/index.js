@@ -6,15 +6,17 @@ import { config } from "dotenv";
 config();
 
 const setup = async () => {
+  let client;
   try {
-    const client = await db.connect();
-    console.log(
-      `[Database] Successfully connected to ${client.options.srvHost}`
-    );
-    const mailer = await Mailer.init();
+    client = await db.connect();
+    console.log(`[Database] Successfully connected to ${client.options.srvHost}`);
+    await Mailer.init();
     const server = new EShopAPI({ db: client }).start();
   } catch (e) {
     console.error("[EShopAPI] Failed to start server. ", e);
+    if (client) {
+      client.close();
+    }
   }
 };
 
