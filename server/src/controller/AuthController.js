@@ -33,6 +33,7 @@ const generateRefreshToken = (payload) => {
 };
 
 const register = async (req, res) => {
+  // #swagger.tags = ['Authorization']
   try {
     const { name, email, mobile, password } = req.body;
     if (!email) {
@@ -71,6 +72,7 @@ const register = async (req, res) => {
 };
 
 const signin = async (req, res) => {
+  // #swagger.tags = ['Authorization']
   try {
     const { email, password } = req.body;
     const { sessionid } = req.session;
@@ -122,6 +124,7 @@ const signin = async (req, res) => {
 };
 
 const signout = async (req, res) => {
+  // #swagger.tags = ['Authorization']
   try {
     const userJwt = req.get("Authorization").slice("Bearer ".length);
     const tokenInfo = Auth.decodeToken(userJwt);
@@ -149,6 +152,7 @@ const signout = async (req, res) => {
 };
 
 const refresh = async (req, res) => {
+  // #swagger.tags = ['Authorization']
   try {
     const { email, mobile, name } = req.user;
     const { refresh_token } = req.body;
@@ -170,6 +174,7 @@ const refresh = async (req, res) => {
 };
 
 const verify = async (req, res) => {
+  // #swagger.tags = ['Authorization']
   try {
     const { code, email, action } = req.body;
     if (!["send", "resend", "code"].includes(action))
@@ -203,6 +208,7 @@ const verify = async (req, res) => {
 };
 
 const forgotpassword = async (req, res) => {
+  // #swagger.tags = ['Authorization']
   try {
     const { email } = req.body;
     if (!email) {
@@ -224,6 +230,7 @@ const forgotpassword = async (req, res) => {
 };
 
 const resetpassword = async (req, res) => {
+  // #swagger.tags = ['Authorization']
   try {
     const { email, verify_token, password } = req.body;
     if (!email) {

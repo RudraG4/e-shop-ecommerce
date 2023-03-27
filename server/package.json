@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev:start": "nodemon index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "swagger-autogen": "node ./docs/swagger.js"
   },
   "repository": {
     "type": "git",
@@ -40,6 +41,8 @@
     "node-cache": "^5.1.2",
     "nodemailer": "^6.8.0",
     "stripe": "^11.5.0",
+    "swagger-autogen": "^2.23.1",
+    "swagger-ui-express": "^4.6.2",
     "uuidv4": "^6.2.13"
   },
   "devDependencies": {
