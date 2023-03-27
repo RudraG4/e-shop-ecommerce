@@ -1,6 +1,7 @@
 import CartDAO from "../dao/CartDAO.js";
 
 const addToCart = async (req, resp) => {
+  // #swagger.tags = ['Cart']
   try {
     const user = req.user;
     const { sessionid } = req.session;
@@ -22,6 +23,7 @@ const addToCart = async (req, resp) => {
 };
 
 const removeFromCart = async (req, resp) => {
+  // #swagger.tags = ['Cart']
   try {
     const user = req.user;
     const { sessionid } = req.session;
@@ -43,6 +45,7 @@ const removeFromCart = async (req, resp) => {
 };
 
 const clearCart = async (req, resp) => {
+  // #swagger.tags = ['Cart']
   try {
     const user = req.user;
     const { sessionid } = req.session;
@@ -59,6 +62,7 @@ const clearCart = async (req, resp) => {
 };
 
 const getCart = async (req, resp) => {
+  // #swagger.tags = ['Cart']
   try {
     const user = req.user;
     const { sessionid } = req.session;
@@ -72,6 +76,7 @@ const getCart = async (req, resp) => {
 };
 
 const getCartCount = async (req, res) => {
+  // #swagger.tags = ['Cart']
   try {
     const user = req.user;
     const { sessionid } = req.session;
@@ -83,6 +88,7 @@ const getCartCount = async (req, res) => {
 };
 
 const calculateSummary = async (req, resp) => {
+  // #swagger.tags = ['Cart']
   try {
     const user = req.user;
     const { sessionid } = req.session;
